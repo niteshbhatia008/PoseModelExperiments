@@ -1,0 +1,3 @@
+The PoseNet-part of PoseModelExperiments-asset includes the PoseNet-Unity library by Infocom TPO (https://github.com/infocom-tpo/PoseNet-Unity).  
+That portion of the software is copyright (c) 2017 by Infocom TPO. See License.txt.
+
