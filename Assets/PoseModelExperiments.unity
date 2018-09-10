@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2008683698}
   - component: {fileID: 2008683697}
+  - component: {fileID: 2008683699}
   m_Layer: 0
   m_Name: PoseEstimator
   m_TagString: Untagged
@@ -637,7 +638,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2008683696}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eaac985e4e4c00e41be0b6ea3c35bf6a, type: 3}
   m_Name: 
@@ -649,6 +650,7 @@ MonoBehaviour:
   showHeatmap: 0
   showPoses: 1
   testImage: {fileID: 0}
+  flipHorizontally: 0
   debugImage: {fileID: 1470550579}
 --- !u!4 &2008683698
 Transform:
@@ -663,6 +665,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2008683699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2008683696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6c816a5d14c1664e9d3d98afcc63f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelName: yolov2-tiny
+  minConfidence: 0.25
+  overlayThreshold: 0.3
+  showBoxes: 1
+  showLabels: 1
+  testImage: {fileID: 0}
+  flipHorizontally: 0
+  debugImage: {fileID: 1470550579}
 --- !u!1 &2021847881
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +719,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -138.15955, y: 0}
+  m_SizeDelta: {x: -291.70117, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021847883
 MonoBehaviour:

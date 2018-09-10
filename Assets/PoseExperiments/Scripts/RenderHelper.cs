@@ -138,7 +138,7 @@ public class RenderHelper : MonoBehaviour
         GL.Begin(GL.QUADS);
         GL.Color(color);
 
-        for(int i = 0; i < alLinePoints.Count; i += 2)
+        for (int i = 0; i < alLinePoints.Count; i += 2)
         {
             Vector3 v0 = alLinePoints[i];
             Vector3 v1 = alLinePoints[i + 1];
@@ -149,6 +149,41 @@ public class RenderHelper : MonoBehaviour
         GL.End();
         GL.PopMatrix();
     }
+
+
+    public void DrawRect2D(Vector3 topLeft, Vector3 bottomRight, float lineWidth, Color color)
+    {
+        GL.PushMatrix();
+        matRender.SetPass(0);
+
+        GL.LoadPixelMatrix();
+        GL.Begin(GL.QUADS);
+        GL.Color(color);
+
+        // top
+        Vector3 v0 = topLeft;
+        Vector3 v1 = topLeft; v1.x = bottomRight.x;
+        DrawLine2D(v0, v1, lineWidth);
+
+        // right
+        v0 = v1;
+        v1 = bottomRight;
+        DrawLine2D(v0, v1, lineWidth);
+
+        // bottom
+        v0 = v1;
+        v1 = topLeft; v1.y = bottomRight.y;
+        DrawLine2D(v0, v1, lineWidth);
+
+        // left
+        v0 = v1;
+        v1 = topLeft;
+        DrawLine2D(v0, v1, lineWidth);
+
+        GL.End();
+        GL.PopMatrix();
+    }
+
 
     public void DrawLine2D(Vector3 v0, Vector3 v1, float lineWidth)
     {

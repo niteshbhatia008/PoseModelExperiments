@@ -41,6 +41,9 @@ public class PoseNetEstimator : MonoBehaviour
     [Tooltip("Static image to be used for testing, instead of the webcam.")]
     public Texture2D testImage = null;
 
+    [Tooltip("Whether the image needs to be flipped horizontally or not.")]
+    public bool flipHorizontally = false;
+
     [Tooltip("UI debug image.")]
     public UnityEngine.UI.RawImage debugImage;
 
@@ -85,23 +88,35 @@ public class PoseNetEstimator : MonoBehaviour
         webcamSource = FindObjectOfType<WebcamSource>();
         webcamTexture = webcamSource != null && testImage == null ? webcamSource.WebcamTex : null;
 
-        // set test image if applicable
-        if(testImage != null && webcamSource != null)
+        if (webcamSource)
         {
-            webcamSource.SetTestImage(testImage);
+            // set static image & horizontal flip, if needed
+            if (testImage != null)
+            {
+                webcamSource.SetTestImage(testImage);
+            }
+
+            webcamSource.SetHorizontalFlip(flipHorizontally);
         }
 
         // get reference to gl-renderer
         renderHelper = FindObjectOfType<RenderHelper>();
-        if(renderHelper)
+
+        if (renderHelper)
         {
+            // set render-helper parameters
             renderHelper.sizePoseImage = new Vector2(modelImageSize, modelImageSize);
-            renderHelper.SetCamImageRect(testImage ? testImage.width : webcamTexture.width, 
+            renderHelper.SetCamImageRect(testImage ? testImage.width : webcamTexture.width,
                 testImage ? testImage.height : webcamTexture.height);
+
+            // set renderer horizontal flip
+            renderHelper.flipHorizontally = !flipHorizontally;
         }
 
         // create async task for pose prediction
         CreateAsyncTask();
+
+        Debug.Log("Pose-Net estimator inited.");
     }
 
 
@@ -137,6 +152,7 @@ public class PoseNetEstimator : MonoBehaviour
                     debugImage.texture = scaledTex;
                 }
 
+                // start model prediction
                 taskPoseNet.Start(scaledTex.GetPixels());
             }
             else if(taskPoseNet.IsCompleted)
@@ -145,6 +161,9 @@ public class PoseNetEstimator : MonoBehaviour
                 {
                     Debug.LogError("Task failed: " + taskPoseNet.ErrorMessage);
                 }
+
+                // mark as processed
+                webcamSource.IsTexUpdated = false;
 
                 taskPoseNet.State = AsyncTaskState.NotRunning;
             }

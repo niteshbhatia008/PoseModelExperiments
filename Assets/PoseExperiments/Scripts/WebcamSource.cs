@@ -10,7 +10,7 @@ public class WebcamSource : MonoBehaviour
     [HideInInspector]
     public Texture2D pictureTex;
 
-    [Tooltip("Whether the web-camera output needs to be flipped horizontally or not.")]
+    [Tooltip("Whether the image needs to be flipped horizontally or not.")]
     public bool flipHorizontally = false;
 
     [Tooltip("Selected web-camera name, if any.")]
@@ -140,6 +140,16 @@ public class WebcamSource : MonoBehaviour
     }
 
 
+    // sets horizontal flip
+    public void SetHorizontalFlip(bool flipHorizontally)
+    {
+        this.flipHorizontally = flipHorizontally;
+
+        Vector3 scale = transform.localScale;
+        transform.localScale = new Vector3(scale.x * (flipHorizontally ? -1f : 1f), scale.y, scale.z);
+    }
+
+
     void Update()
     {
         // set aspect ratio if needed
@@ -157,7 +167,7 @@ public class WebcamSource : MonoBehaviour
         }
 
         // check for texture update
-        if(webcamTex != null && webcamTex.isPlaying)
+        if(pictureTex == null && webcamTex != null && webcamTex.isPlaying)
         {
             isTexUpdated = webcamTex.didUpdateThisFrame;
         }
