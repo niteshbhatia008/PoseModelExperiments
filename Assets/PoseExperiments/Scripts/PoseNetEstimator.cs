@@ -30,6 +30,7 @@ public class PoseNetEstimator : MonoBehaviour
     public int modelImageSize = 513;
 
     [Tooltip("Minimum confidence of the detected keypoints, in order to be considered valid.")]
+    [Range(0.1f, 0.9f)]
     public float minConfidence = 0.1f;
 
     [Tooltip("Whether to show the keypoint heatmaps.")]

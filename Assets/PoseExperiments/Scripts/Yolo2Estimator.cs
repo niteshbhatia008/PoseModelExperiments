@@ -10,9 +10,11 @@ public class Yolo2Estimator : MonoBehaviour
     public string modelName = "yolov2-tiny";
 
     [Tooltip("Minimum confidence of the detected keypoints, in order to be considered valid.")]
+    [Range(0.1f, 0.9f)]
     public float minConfidence = 0.25f;
 
     [Tooltip("Overlay threshold used by the NMS-filter.")]
+    [Range(0.1f, 0.9f)]
     public float overlayThreshold = 0.3f;
 
     [Tooltip("Whether to show the detected object boxes.")]
